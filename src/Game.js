@@ -25,11 +25,17 @@ class Game {
   }
 
   getQuestions() {
-
+    if (questions[this.questionsIndex] === undefined) {
+      this.questionsIndex = 0;
+    }
+    let questionSet = questions[this.questionsIndex];
+    this.questionsIndex += 1;
+    return questionSet;
   }
 
   start() {
-    var cards = prototypeQuestions.map(item =>
+    var questionSet = this.getQuestions();
+    var cards = questionSet.map(item =>
       new Card(item.id, item.question, item.answers, item.correctAnswer));
     var deck = new Deck(cards);
     var round = new Round(deck);
