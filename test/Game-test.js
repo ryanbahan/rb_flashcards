@@ -44,9 +44,7 @@ describe('Game', function() {
   it('testing grounds', function() {
     const game = new Game();
 
-    game.start();
-
-    console.log(game.currentRound.deck);
+    // game.start();
 
     // expect(game.currentRound).to.be.an.instanceof(Round);
   });
