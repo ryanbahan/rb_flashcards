@@ -140,7 +140,7 @@ describe('Round', function() {
     expect(round.calculatePercentCorrect()).to.equal(33);
   });
 
-  it('should be able to end a round', function() {
+  it.skip('should be able to end a round', function() {
     const cardA = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
     const cardB = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
     const cardC = new Card(12, 'What is Travis\'s favorite stress reliever?', ['listening to music', 'watching Netflix', 'playing with bubble wrap'], 'playing with bubble wrap');
