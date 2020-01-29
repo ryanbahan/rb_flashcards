@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const Game = require('./Game');
+// const Game = require('./Game');
 
 const genList = (round) => {
   let card = round.returnCurrentCard();
@@ -35,12 +35,14 @@ async function main(round) {
   const currentRound = await getRound(round);
   const getAnswer = await inquirer.prompt(genList(currentRound));
   const getConfirm = await inquirer.prompt(confirmUpdate(getAnswer.answers, round));
-  const game = require('../index.js');
+  // const game = require('../index.js');
 
     if(!round.returnCurrentCard()) {
       round.endRound();
-      var gameInstance = game.game;
-      gameInstance.start();
+      main(round.restartRound())
+      // round.restartRound();
+      // var gameInstance = game.game;
+      // gameInstance.start();
     } else {
       main(round);
     }

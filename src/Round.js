@@ -1,5 +1,10 @@
 const Turn = require('../src/Turn');
-// const Game = require('../src/Game');
+const Deck = require('../src/Deck');
+const Card = require('../src/Card');
+const data = require('./data');
+const prototypeQuestions = data.prototypeData;
+const testQuestions = data.prototypeDataTwo;
+const questions = [prototypeQuestions, testQuestions];
 
 class Round {
   constructor(deck) {
@@ -40,9 +45,14 @@ class Round {
     console.log(`** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${this.calculateRoundTime()}!
 -----------------------------------------------------------------------`);
   }
-  // restartRound() {
-  //   game.start();
-  // }
+  restartRound() {
+    var questionSet = testQuestions;
+    var cards = questionSet.map(item =>
+      new Card(item.id, item.question, item.answers, item.correctAnswer));
+    var newDeck = new Deck(cards);
+    var newRound = new Round(newDeck);
+    return newRound;
+  }
 }
 
 module.exports = Round;

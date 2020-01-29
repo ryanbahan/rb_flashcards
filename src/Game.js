@@ -40,7 +40,6 @@ class Game {
     var deck = new Deck(cards);
     var round = new Round(deck);
     this.currentRound = round;
-
     this.printMessage(deck, round);
     this.printQuestion(round);
   }
