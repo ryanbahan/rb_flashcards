@@ -35,14 +35,11 @@ async function main(round) {
   const currentRound = await getRound(round);
   const getAnswer = await inquirer.prompt(genList(currentRound));
   const getConfirm = await inquirer.prompt(confirmUpdate(getAnswer.answers, round));
-  // const game = require('../index.js');
 
     if(!round.returnCurrentCard()) {
       round.endRound();
-      main(round.restartRound())
-      // round.restartRound();
-      // var gameInstance = game.game;
-      // gameInstance.start();
+      round.newRound();
+      main(round)
     } else {
       main(round);
     }
