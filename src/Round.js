@@ -86,13 +86,13 @@ class Round {
 
   newRound(questionsChoice) {
     this.resetRound();
-    var questionSet = questions[questionsChoice];
+    var questionSet = questions[questionsChoice] || questions.prototypeDataTwo;
     var cards = questionSet.map(item =>
       new Card(item.id, item.question, item.answers, item.correctAnswer));
     this.deck = new Deck(cards);
     this.printNewRoundMessage(this.deck, this);
   }
-  
+
   getIncorrectCards() {
     this.deck.cards = this.incorrectGuesses;
     this.incorrectGuesses = [];
