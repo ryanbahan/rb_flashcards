@@ -1,5 +1,11 @@
+const data = require('./data');
+const prototypeQuestions = data.prototypeData;
+const testQuestions = data.prototypeDataTwo;
+const questions = [prototypeQuestions, testQuestions];
+
 const Turn = require('../src/Turn');
-// const Game = require('../src/Game');
+const Deck = require('../src/Deck');
+const Card = require('../src/Card');
 
 class Round {
   constructor(deck) {
@@ -9,7 +15,8 @@ class Round {
     this.incorrectGuesses = [];
     this.correctGuesses = [];
     this.roundStart = Date.now();
-    this.roundEnd = null
+    this.roundEnd = null,
+    this.questionsIndex = 0
   }
   returnCurrentCard() {
       return this.deck.cards[0];
@@ -40,9 +47,46 @@ class Round {
     console.log(`** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${this.calculateRoundTime()}!
 -----------------------------------------------------------------------`);
   }
-  // restartRound() {
-  //   game.start();
-  // }
+  getQuestions() {
+    if (questions[this.questionsIndex] === undefined) {
+      this.questionsIndex = 0;
+    };
+    let questionSet = questions[this.questionsIndex];
+    this.questionsIndex += 1;
+    return questionSet;
+  }
+  printNewRoundMessage(deck, round) {
+    console.log(`Welcome to FlashCards! You are playing with ${deck.countCards()} cards.
+-----------------------------------------------------------------------`)
+  }
+  printIncorrectRoundMessage(deck, round) {
+    console.log(`Still a few left! You got ${deck.countCards()} cards wrong.
+-----------------------------------------------------------------------`)
+  }
+  resetRound() {
+    this.roundStart = Date.now();
+    this.turns = 0;
+    this.currentTurn = null;
+    this.incorrectGuesses = [];
+    this.correctGuesses = [];
+  }
+  newRound() {
+    this.resetRound();
+    var questionSet = this.getQuestions();
+    var cards = questionSet.map(item =>
+      new Card(item.id, item.question, item.answers, item.correctAnswer));
+    this.deck = new Deck(cards);
+    this.printNewRoundMessage(this.deck, this);
+  }
+  getIncorrectCards() {
+    this.deck.cards = this.incorrectGuesses;
+    this.incorrectGuesses = [];
+    if (this.deck.cards.length === 0) {
+      return true;
+    } else {
+      this.printIncorrectRoundMessage(this.deck, this);
+    }
+  }
 }
 
 module.exports = Round;
