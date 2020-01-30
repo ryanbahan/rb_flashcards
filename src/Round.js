@@ -59,6 +59,10 @@ class Round {
     console.log(`Welcome to FlashCards! You are playing with ${deck.countCards()} cards.
 -----------------------------------------------------------------------`)
   }
+  printIncorrectRoundMessage(deck, round) {
+    console.log(`Still a few left! You got ${deck.countCards()} cards wrong.
+-----------------------------------------------------------------------`)
+  }
   resetRound() {
     this.roundStart = Date.now();
     this.turns = 0;
@@ -73,6 +77,15 @@ class Round {
       new Card(item.id, item.question, item.answers, item.correctAnswer));
     this.deck = new Deck(cards);
     this.printNewRoundMessage(this.deck, this);
+  }
+  getIncorrectCards() {
+    this.deck.cards = this.incorrectGuesses;
+    this.incorrectGuesses = [];
+    if (this.deck.cards.length === 0) {
+      return true;
+    } else {
+      this.printIncorrectRoundMessage(this.deck, this);
+    }
   }
 }
 
