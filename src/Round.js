@@ -1,7 +1,8 @@
 const data = require('./data');
-const prototypeQuestions = data.prototypeData;
-const testQuestions = data.prototypeDataTwo;
-const questions = [prototypeQuestions, testQuestions];
+const questions = {
+  prototypeData: data.prototypeData,
+  prototypeDataTwo: data.prototypeDataTwo
+};
 
 const Turn = require('../src/Turn');
 const Deck = require('../src/Deck');
@@ -18,9 +19,11 @@ class Round {
     this.roundEnd = null,
     this.questionsIndex = 0
   }
+
   returnCurrentCard() {
       return this.deck.cards[0];
   }
+
   takeTurn(guess) {
     this.turns += 1;
     this.currentTurn = new Turn(guess, this.returnCurrentCard());
@@ -33,20 +36,27 @@ class Round {
     }
     return this.currentTurn.giveFeedback();
   }
+
   calculatePercentCorrect() {
-    return Math.round((this.correctGuesses.length / this.turns) * 100);
+    let num = Math.round((this.correctGuesses.length / this.turns) * 100);
+    this.correctGuesses = [];
+    this.turns = 0;
+    return num;
   }
+
   calculateRoundTime() {
     var seconds = Math.floor((this.roundEnd - this.roundStart) / 1000);
     var minutes = Math.floor(seconds/60);
     seconds = seconds - (minutes * 60);
     return `${minutes} minutes and ${seconds} seconds`
   }
+
   endRound() {
     this.roundEnd = Date.now();
-    console.log(`** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${this.calculateRoundTime()}!
+    console.log(`** Round over! ** You completed this round in ${this.calculateRoundTime()}!
 -----------------------------------------------------------------------`);
   }
+
   getQuestions() {
     if (questions[this.questionsIndex] === undefined) {
       this.questionsIndex = 0;
@@ -55,14 +65,17 @@ class Round {
     this.questionsIndex += 1;
     return questionSet;
   }
+
   printNewRoundMessage(deck, round) {
     console.log(`Welcome to FlashCards! You are playing with ${deck.countCards()} cards.
 -----------------------------------------------------------------------`)
   }
+
   printIncorrectRoundMessage(deck, round) {
-    console.log(`Still a few left! You got ${deck.countCards()} cards wrong.
+    console.log(`Still a few left! You got ${this.calculatePercentCorrect()}% correct!
 -----------------------------------------------------------------------`)
   }
+
   resetRound() {
     this.roundStart = Date.now();
     this.turns = 0;
@@ -70,14 +83,16 @@ class Round {
     this.incorrectGuesses = [];
     this.correctGuesses = [];
   }
-  newRound() {
+
+  newRound(questionsChoice) {
     this.resetRound();
-    var questionSet = this.getQuestions();
+    var questionSet = questions[questionsChoice];
     var cards = questionSet.map(item =>
       new Card(item.id, item.question, item.answers, item.correctAnswer));
     this.deck = new Deck(cards);
     this.printNewRoundMessage(this.deck, this);
   }
+  
   getIncorrectCards() {
     this.deck.cards = this.incorrectGuesses;
     this.incorrectGuesses = [];

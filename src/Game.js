@@ -1,4 +1,6 @@
 const util = require('./util');
+const data = require('./data');
+const questionsChooser = data.questionOptions;
 
 const Round = require('../src/Round');
 
@@ -7,13 +9,19 @@ class Game {
     this.currentRound = null;
   }
 
+  async printNewGameMessage(questionsChooser) {
+    let questionsChoice = await util.introPrompt(questionsChooser);
+    return questionsChoice;
+  }
+
   printQuestion(round) {
       util.main(round);
   }
 
-  start() {
+  async start() {
+    let questionsChoice = await this.printNewGameMessage(questionsChooser);
     var round = new Round();
-    round.newRound();
+    round.newRound(questionsChoice);
     this.currentRound = round;
     this.printQuestion(round);
   }

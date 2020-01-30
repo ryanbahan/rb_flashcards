@@ -1,5 +1,4 @@
 const inquirer = require('inquirer');
-// const Game = require('./Game');
 
 const genList = (round) => {
   let card = round.returnCurrentCard();
@@ -48,4 +47,23 @@ async function main(round) {
     }
 }
 
+async function introPrompt(questionsChooser) {
+
+  const getQuestion = await inquirer.prompt({
+    type: 'rawlist',
+    message: questionsChooser.question,
+    name: 'questionChoice',
+    choices: questionsChooser.answers
+  });
+
+  const questionsChoice = await getQuestion.questionChoice;
+
+  var questionId = questionsChooser.answersIds.find
+  (answer => answer.name === questionsChoice).id;
+
+  return questionId;
+}
+
 module.exports.main = main;
+
+module.exports.introPrompt = introPrompt;

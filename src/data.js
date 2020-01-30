@@ -1,3 +1,9 @@
+const questionOptions = {
+  "question": "Welcome to Flash Cards! Please choose your topic.",
+  "answers": ["OOP Concepts 1", "OOP Concepts 2"],
+  "answersIds": [{"name": "OOP Concepts 1", "id": "prototypeData"}, {"name": "OOP Concepts 2", "id": "prototypeDataTwo"}]
+};
+
 const prototypeData = [{
   "id": 1,
   "question": "What allows you to define a set of related information using key-value pairs?",
@@ -153,6 +159,7 @@ const prototypeDataTwo = [{
 }]
 
 module.exports = {
+  questionOptions,
   prototypeData,
   prototypeDataTwo
 }
