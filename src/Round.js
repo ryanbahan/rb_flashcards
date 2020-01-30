@@ -55,11 +55,24 @@ class Round {
     this.questionsIndex += 1;
     return questionSet;
   }
+  printNewRoundMessage(deck, round) {
+    console.log(`Welcome to FlashCards! You are playing with ${deck.countCards()} cards.
+-----------------------------------------------------------------------`)
+  }
+  resetRound() {
+    this.roundStart = Date.now();
+    this.turns = 0;
+    this.currentTurn = null;
+    this.incorrectGuesses = [];
+    this.correctGuesses = [];
+  }
   newRound() {
+    this.resetRound();
     var questionSet = this.getQuestions();
     var cards = questionSet.map(item =>
       new Card(item.id, item.question, item.answers, item.correctAnswer));
     this.deck = new Deck(cards);
+    this.printNewRoundMessage(this.deck, this);
   }
 }
 

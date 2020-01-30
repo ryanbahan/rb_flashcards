@@ -39,7 +39,7 @@ async function main(round) {
     if(!round.returnCurrentCard()) {
       round.endRound();
       round.newRound();
-      main(round)
+      main(round);
     } else {
       main(round);
     }
