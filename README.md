@@ -8,19 +8,10 @@ This is a command-line application that runs directly from the terminal. You can
 
 ## Project Goals
 
-* 
-
-## Challenges
-
-* 
-
-## Wins
-
-* 
-
-## Future Considerations
-
-* 
+* Implement TDD processes to build an application that sucessfully follows SOLID and OOP principles
+* Begin building and utilizing asynchronous functions in javascript
+* Build an application that leverages node modules to limit/control scope and memory usage
+* Develop understanding of non-FE logic that ultimately influences UI decisions
 
 ## Built With
 
